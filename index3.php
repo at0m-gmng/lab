@@ -58,7 +58,12 @@
                 $success = $connection->query ("INSERT INTO `products` (`id`, `id_category`, `product_name`,  `product_commit`, `product_image`) VALUES (NULL, '$category', '$name', '$comment', '$picture')");
                     echo "<br>Результат:  $success";
                     echo  "<br>Выбрана категория: $category";
-            }
+                    
+                    // $result_set = $connection->query("SELECT * FROM `products`");
+                    // while (($row = $result_set->fetch_assoc())!= false ){
+                    // echo "<pre>"; print_r ($row); echo "</pre>";
+                    // }
+                }
         
         if (!$connection->set_charset($charset)) {
             echo  "Ошибка установки кодировки UTF8";

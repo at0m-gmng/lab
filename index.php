@@ -1,3 +1,21 @@
+<?
+    $server = $_SERVER['SERVER_ADDR'];
+    $username = 'root';
+    $password = '';
+    $db_name= 'my_first';
+    $charset = 'utf8';
+
+    $connection = new mysqli ($server, $username, $password, $db_name);
+
+    function printResult ($result_set) {
+        while (($row = $result_set->fetch_assoc()) !=false) {
+            echo $row['product_name'];
+            echo $row['product_commit'];
+            echo $row['product_image'];
+            echo $row['id_category'];
+        }
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,21 +72,24 @@
                 <div class="body_tovar_stroka_1">
                     <!-- Циклом выводим файлы из массива -->
                     <?php
-                    // $connection = new mysqli ($server, $username, $password, $db_name);
 					// $products= file ('my_form_reports.txt');
-                        foreach ($products as $key => $value)
-                            {
-								$PRODUCTS[] = array (explode (", ", $products[$key])); }
-								for($i=0;$i<=$key; $i++):
+                        // foreach ($products as $key => $value)
+                            // {
+                                // $PRODUCTS[] = array (explode (", ", $products[$key])); }
+                                // $q = $connection->query("SELECT `id` FROM `products` WHERE `id` = VALUES ");
+                                // echo "<br>$q<br>";
+                        		for($i=1;$i<=10; $i++):
+                        // while ($row)
                     ?>
 
                         <div class="tovar_0">
                             <div class="t_0">
-                                <img src="images/<?php echo $PRODUCTS[$i][0][2]; ?>">
+                                <img src="images/<?php $result_set = $connection->query("SELECT `product_image` FROM `products` WHERE `id`='$i' "); printResult($result_set);  ?>"> <!-- echo $PRODUCTS[$i][0][2]; -->
                             </div>
+                            
                             <div class="banner_length">
-                                <a><p class="banner"><?php echo $PRODUCTS[$i][0][0]; ?></p></a>
-								<p class="commit"><?php echo $PRODUCTS[$i][0][1]; ?></p>
+                                <a><p class="banner"><?php $result_set = $connection->query("SELECT `product_name` FROM `products` WHERE `id`='$i' "); printResult($result_set); ?></p></a> 
+								<p class="commit"><?php $result_set = $connection->query("SELECT `product_commit` FROM `products` WHERE `id`='$i' "); printResult($result_set); ?></p>
                                 <p class="t"><b>1250 руб</b></p>
                                 <div class="kor">
                                     <a class="kor1"><p class="kor0">В корзину</p></a>
@@ -76,9 +97,10 @@
                             </div>
                         </div>
 
-                    <?php
+                    <?php   
+                            
                             endfor;
-                            // $connection->close();
+                            $connection->close();
                     ?>
                     <!-- Вот до сюда -->
                 </div>
