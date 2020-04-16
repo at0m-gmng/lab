@@ -11,14 +11,15 @@
     $name = $_POST['product_name'];
     $comment = $_POST['commint'];
     $picture = $_FILES['img']['name'];  
+    $category = $_POST['category'];
     $tmp_picture = $_FILES['img']['tmp_name'];  
     
     if(($name=="") && ($commet=="") && ($picture=="")) {
         echo "<div class='ttt'>Заполнены не все поля формы, заполните форму правильно<br><a href='index4.php'>Заполнить</a></div>";
     }
     else {
-
-        move_uploaded_file($tmp_picture, "images/".$picture);
+        //              ВЫВОВ В ФАЙЛ
+       /* move_uploaded_file($tmp_picture, "images/".$picture);
 
         // если размер файла больше чем 100х100px, тогда выдаём ошибку
         $info = getimagesize("images/".$picture);
@@ -34,11 +35,36 @@
         fwrite ($arr, $str);
         //закрываем файл
         fclose ($arr);
-        }
+
         else {
             echo "<div class='ttt'>Вы загрузили слишком большой файл, заполните форму правильно<br><a href='index4.php'>Заполнить</a></div>";
 
+        }*/
+
+        $server = $_SERVER['SERVER_ADDR'];
+        $username = 'root';
+        $password = '';
+        $db_name= 'my_first';
+        $charset = 'utf8';
+    
+        $connection = new mysqli ($server, $username, $password, $db_name);
+    
+        if ($connection->connect_error) {
+    
+            die  ( "Ошибка соединениея".$connection->$connect_error);
         }
+            else {
+                echo  "Вы подключились к Базе Данных";
+                $success = $connection->query ("INSERT INTO `products` (`id`, `id_category`, `product_name`,  `product_commit`, `product_image`) VALUES (NULL, '$category', '$name', '$comment', '$picture')");
+                    echo "<br>Результат:  $success";
+                    echo  "<br>Выбрана категория: $category";
+            }
+        
+        if (!$connection->set_charset($charset)) {
+            echo  "Ошибка установки кодировки UTF8";
+        }
+    
+        $connection->close();
     }       
 
 ?>

@@ -54,7 +54,8 @@
                 <div class="body_tovar_stroka_1">
                     <!-- Циклом выводим файлы из массива -->
                     <?php
-					$products= file ('my_form_reports.txt');
+                    // $connection = new mysqli ($server, $username, $password, $db_name);
+					// $products= file ('my_form_reports.txt');
                         foreach ($products as $key => $value)
                             {
 								$PRODUCTS[] = array (explode (", ", $products[$key])); }
@@ -76,7 +77,8 @@
                         </div>
 
                     <?php
-							endfor;
+                            endfor;
+                            // $connection->close();
                     ?>
                     <!-- Вот до сюда -->
                 </div>
