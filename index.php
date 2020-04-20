@@ -1,4 +1,16 @@
-<?
+<?  
+    setcookie ("id_category", $_GET['id']);
+    // echo $_COOKIE['id_category'];
+    setcookie ("category_num", $_POST['category']);
+    // echo $_COOKIE['category_num'];
+    if($num = (isset ($_COOKIE["category_num"]))) {
+        $category = $_COOKIE["category_num"];
+    }
+    else {
+        $category = "Выберите сортировку";
+    }
+
+
     $server = $_SERVER['SERVER_ADDR'];
     $username = 'root';
     $password = '';
@@ -7,14 +19,9 @@
 
     $connection = new mysqli ($server, $username, $password, $db_name);
 
-    function printResult ($result_set) {
-        while (($row = $result_set->fetch_assoc()) !=false) {
-            echo $row['product_name'];
-            echo $row['product_commit'];
-            echo $row['product_image'];
-            echo $row['id_category'];
-        }
-    }
+
+                  
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,7 +46,9 @@
         </ul>
     <div class="header_content">
         
-        <dib class="header_content_logo">
+        <dib class=""><a href="index.php">
+            <img src="images/logo100x110.jpg" alt="" class="header_content_logo" url="">
+            </a>
         </dib>
         <div class="header_content_name"><p>интернет-магазин<br>электроинструмента</p>
         </div>
@@ -64,7 +73,22 @@
     <div>
         <div class="body_body">
             <div class="body_tovar">
-                <div class="Rec0"><b class="Rec">Рекомендуем</b>
+                <div class="Rec0">
+                    <b class="Rec">Рекомендуем</b>
+                    <div class="sorting">
+                        <form class="form_sorting" name="form1" action="" method="POST" enctype="multipart/form-data">
+                            <b>Сортировать по:</b>
+                            <label class="form_label form_label_2" for="category"></label>
+                            <select name="category"> 
+                                <option ><?php echo $category; ?></option>
+                                <option value="Название А-Я"  >Название А-Я</option>
+                                <option value="Название Я-А"  >Название Я-А</option>
+                                <option value="Цена А-Я"  >Цена А-Я</option>
+                                <option value="Цена Я-А"  >Цена Я-А</option>
+                            </select>
+                            <input class="form_bottom bottom-sorting" type="submit"  value="Выбрать"/>    
+                        </form>
+                    </div>
                     <div class="add">
                         <a href="index4.php" class=""><b>Добавить элемент</b></a>
                     </div>
@@ -72,35 +96,87 @@
                 <div class="body_tovar_stroka_1">
                     <!-- Циклом выводим файлы из массива -->
                     <?php
+                    //               ВЫВОД ИЗ ФАЙЛА
 					// $products= file ('my_form_reports.txt');
                         // foreach ($products as $key => $value)
                             // {
                                 // $PRODUCTS[] = array (explode (", ", $products[$key])); }
-                                // $q = $connection->query("SELECT `id` FROM `products` WHERE `id` = VALUES ");
-                                // echo "<br>$q<br>";
-                        		for($i=1;$i<=10; $i++):
-                        // while ($row)
-                    ?>
+                                // for($i=1;$i<=$key; $i++):
+                        switch($category = $_POST['category']) {
+                            case 'Название А-Я':
+                                $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` ASC";
+                                break;
+                            case 'Название Я-А':
+                                $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` DESC";
+                                break;
+                            case 'Цена А-Я':
+                                $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` ASC";
+                                break;
+                            case 'Цена Я-А':
+                                $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` DESC";
+                                break;
+                            default:  $sql = "SELECT * FROM `products` ";
+                            $category = "Выберите сортировку";
+                        }
+                        $result = $connection->query($sql);   
 
+
+                        // switch($sql0 = $_GET['id']) {
+                        //     case '1':
+                        //         $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 1";
+                        //         break;
+                        //     case '2':
+                        //         $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 2";
+                        //         break;
+                        //     case '3':
+                        //         $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 3";
+                        //         break;
+                        //     case '4':
+                        //         $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 4";
+                        //         break;
+                        //     case '5':
+                        //         $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 5";
+                        //         break;
+                        //     default:  $sql0 = "SELECT * FROM `products` ";
+                        
+                        // }
+                        //     $result0 = $connection->query($sql0);
+                        //                                       ) || ($row= $result0->fetch_assoc() )
+                        while (   ($row = $result->fetch_assoc()) ) {
+                            // echo $row['id_category'];
+                    ?>
                         <div class="tovar_0">
-                            <div class="t_0">
-                                <img src="images/<?php $result_set = $connection->query("SELECT `product_image` FROM `products` WHERE `id`='$i' "); printResult($result_set);  ?>"> <!-- echo $PRODUCTS[$i][0][2]; -->
-                            </div>
+                            <a><p class="banner"><?php echo $row['product_name']; ?></p></a> 
                             
                             <div class="banner_length">
-                                <a><p class="banner"><?php $result_set = $connection->query("SELECT `product_name` FROM `products` WHERE `id`='$i' "); printResult($result_set); ?></p></a> 
-								<p class="commit"><?php $result_set = $connection->query("SELECT `product_commit` FROM `products` WHERE `id`='$i' "); printResult($result_set); ?></p>
-                                <p class="t"><b>1250 руб</b></p>
-                                <div class="kor">
-                                    <a class="kor1"><p class="kor0">В корзину</p></a>
-                                </div>
+                            <img src="images_min/<?php echo $row['product_image']; ?>"> 
+                                <!--  Первичный вариант - ВЫВОД ЧЕРЕЗ ФУНКЦИЮ: $result_set = $connection->query("SELECT `product_image` FROM `products` WHERE `id`='$i' "); printResult($result_set); 
+                                        ВЫВОД ИЗ ФАЙЛ:          echo $PRODUCTS[$i][0][2]; -->
+                            <div class="div_commit">
+                            <p class="commit"><?php
+                                $string = $row['product_commit'];
+                                $string = substr($string, 0, 115);
+                                $string = rtrim($string, " !*/?,.-");
+                                $string = substr($string, 0, strrpos($string, ' '));
+                                if ($string==true){
+                                echo $string."... "; }
+                                else {
+                                    echo $row['product_commit'];
+                                }
+                            ?>
+                            </p>
                             </div>
+                            </div>
+                            <div class="t_0">
+                                <p class="t"><b><?php echo $row['product_price']; ?> руб</b></p>
+                                <button class="bottom-sorting">
+                                    <p>В корзину</p>
+                                    <!-- <a class="kor1"><p class="kor0">В корзину</p></a> -->
+                                </button>
+                            </div>  
                         </div>
-
                     <?php   
-                            
-                            endfor;
-                            $connection->close();
+                        } // endfor;
                     ?>
                     <!-- Вот до сюда -->
                 </div>
@@ -116,18 +192,14 @@
         <div class="body_menu">
             <ul><h1 class="Kat">Каталог</h1>
                 <div class="body_menu_li">
-                    <li><a href="" class="">Аккумуляторный инструмент</a></li>
-                    <li>
-                        <ul class="system">
-                            <li><a href="" class="">Система 18 В</a></li>
-                            <li><a href="" class="">Система 14,4 В</a></li>
-                            <li><a href="" class="">Система 12 В</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="" class="">Лазерные уровни, дальномеры</a></li>
-                    <li><a href="" class="">Сетевые дрели, шуруповёрты, миксеры</a></li>
-                    <li><a href="" class="">Перфораторы и отбойные молотки</a></li>
-                    <li><a href="" class="">Металлообработка</a></li>
+                <?php
+                    $sql3 = "SELECT * FROM `categories`";
+
+                    $result3 = $connection->query($sql3); 
+                    while ( $row = $result3->fetch_assoc() ) {
+                ?>
+                <li><a class="category" href="index.php?id=<?=$row['id_category'];?>"><?php echo $row['category']; ?></a></li>
+                <? } ?>
                 </div>
             </ul>
         </div>

@@ -11,17 +11,17 @@
   <h2 class="form_title">Заполните форму товара</h2>
 
   <div class="form_group" >   
-    <input class="form_text" type="text" name="product_name" maxlength="15" placeholder="Введите название товара"/>
+    <input class="form_text" type="text" name="product_name" maxlength="30" placeholder="Введите название товара"/>
     <!-- <label class="form_label">Введите Название Товара</label> -->
   </div>
   
   <div class="form_group" >
-    <textarea class="form_commit"  name="commint" maxlength="30" placeholder="Комментарии..."></textarea>
+    <textarea class="form_commit"  name="commint" placeholder="Комментарии..."></textarea>
     <!-- <label class="form_label">Введите Описание Товара</label> -->
   </div>
   
-  <div class="form_group">
-    <label class="form_label" for="category">Выберите категорию</label><br><br>
+  <div class="form_group form_group_2">
+    <label class="form_label form_label_2" for="category">Выберите категорию</label><br><br>
     <select name="category">
       <option value="1">Аккумуляторный инструмент</option>
       <option value="2">Лазерные уровни, дальномеры</option>
@@ -29,10 +29,12 @@
       <option value="4">Перфораторы и отбойные молотки</option>
       <option value="5">Металлообработка</option>
       </select>
+
+      <input class="form_text form_text_2" type="text" name="product_price" maxlength="15" placeholder="Введите цену товара"/>
   </div> 
 
   <div class="form_group" >
-      <label class="form_label" for="fale">Загрузите картинку размером не более чем 100x100</label>
+      <label class="form_label" for="fale">Загрузите картинку</label>
       <br><br><input class="form_file" type="file" name="img"/>
   </div>
   

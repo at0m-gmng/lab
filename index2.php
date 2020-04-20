@@ -27,4 +27,8 @@
     }
 
     $connection->close();
+
+$s='empty';
+if (isset($s)) { echo "num"; } else { echo "www"; }
 ?>
+
