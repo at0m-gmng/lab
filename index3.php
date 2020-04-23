@@ -59,16 +59,23 @@
               echo 'Некорректное изображение'; // Выводим ошибку, если формат изображения недопустимый
               return false;
             }
-            if ($x_o + $w_o > $w_i) $w_o = $w_i - $x_o; // Если ширина выходного изображения больше исходного (с учётом x_o), то уменьшаем её
+            
+            if ($x_o + $w_o > $w_i) $w_o = $w_i - $x_o;  // Если ширина выходного изображения больше исходного (с учётом x_o), то уменьшаем её
             if ($y_o + $h_o > $h_i) $h_o = $h_i - $y_o; // Если высота выходного изображения больше исходного (с учётом y_o), то уменьшаем её
+             
+            if ($w_i > $w_o) $x_o = ($w_i/2) - ($w_o);
+            if ($h_i > $h_o) $y_o = ($h_i/2) - ($h_o);           
             $img_o = imagecreatetruecolor($w_o, $h_o); // Создаём дескриптор для выходного изображения
             imagecopy($img_o, $img_i, 0, 0, $x_o, $y_o, $w_o, $h_o); // Переносим часть изображения из исходного в выходное
             $func = 'image'.$ext; // Получаем функция для сохранения результата
             return $func($img_o, $image); // Сохраняем изображение в тот же файл, что и исходное, возвращая результат этой операции
-          }
-          copy ("images/".$picture, "images_min/".$picture);
-          $picture_min = crop("images_min/".$picture, 0, 0, 100, 100);// Вызываем функцию
-
+        }
+        copy ("images/".$picture, "images_min/".$picture);
+        $picture_min = crop("images_min/".$picture, 0, 0, 100, 100);// Вызываем функцию
+          
+          
+          
+          
         $server = $_SERVER['SERVER_ADDR'];
         $username = 'root';
         $password = '';
@@ -85,7 +92,7 @@
                 echo  "Вы подключились к Базе Данных";
                 $success = $connection->query ("INSERT INTO `products` (`id`, `id_category`, `product_name`,  `product_commit`, `product_price`, `product_image`, `product_image_min`) VALUES (NULL, '$category', '$name', '$comment', '$price', '$picture', '$picture_min')");
                     echo "<br>Результат:  $success";
-                    echo  "<br>Выбрана категория: $category";\
+                    echo  "<br>Выбрана категория: $category";
                 }
         
         if (!$connection->set_charset($charset)) {

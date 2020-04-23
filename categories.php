@@ -19,23 +19,23 @@
 
     $connection = new mysqli ($server, $username, $password, $db_name);
 
-    switch($category = $_POST['category']) {
-        case 'Название А-Я':
-            $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` ASC";
-            break;
-        case 'Название Я-А':
-            $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` DESC";
-            break;
-        case 'Цена А-Я':
-            $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` ASC";
-            break;
-        case 'Цена Я-А':
-            $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` DESC";
-            break;
-        default:  $sql = "SELECT * FROM `products` ";
-        $category = "Выберите сортировку";
-    }
-    $result = $connection->query($sql);   
+    // switch($category = $_POST['category']) {
+    //     case 'Название А-Я':
+    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` ASC";
+    //         break;
+    //     case 'Название Я-А':
+    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` DESC";
+    //         break;
+    //     case 'Цена А-Я':
+    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` ASC";
+    //         break;
+    //     case 'Цена Я-А':
+    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` DESC";
+    //         break;
+    //     default:  $sql = "SELECT * FROM `products` ";
+    //     $category = "Выберите сортировку";
+    // }
+    // $result = $connection->query($sql);   
                   
 
 ?>
@@ -119,8 +119,29 @@
                                 // $PRODUCTS[] = array (explode (", ", $products[$key])); }
                                 // for($i=1;$i<=$key; $i++):
 
-
-                            while (   ($row = $result->fetch_assoc()) ) {
+                        switch($sql0 = $_GET['id']) {
+                            case '1':
+                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 1";
+                                break;
+                            case '2':
+                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 2";
+                                break;
+                            case '3':
+                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 3";
+                                break;
+                            case '4':
+                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 4";
+                                break;
+                            case '5':
+                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 5";
+                                break;
+                            default:  $sql0 = "SELECT * FROM `products` ";
+                        
+                        }
+                            $result0 = $connection->query($sql0);
+ 
+                            // while (   ($row = $result->fetch_assoc()) || ($row= $result0->fetch_assoc() ) ) {
+                            while (   ($row = $result0->fetch_assoc()) ) {
                     ?>
                         <div class="tovar_0">
                             <a><p class="banner"><?php echo $row['product_name']; ?></p></a> 

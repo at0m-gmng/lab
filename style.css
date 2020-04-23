@@ -156,7 +156,7 @@ body {margin:0; padding: 0;}
     width: auto;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     /* border: 1px solid red; */
     
 }
@@ -176,9 +176,14 @@ body {margin:0; padding: 0;}
 
 .tovar_0 {
     /* display: flex; */
-    width: 33%;
+    width: 30%;
+    margin: 0 10px;
+    margin-bottom: 10px;
     height: 200px;
-    /* border: 1px solid green; */
+    border: 1px solid rgb(238, 225, 184);
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgba(0,0,0, 0.8);
+    
 }
 
 .tovar_0 a :hover {
@@ -197,7 +202,7 @@ body {margin:0; padding: 0;}
 
 .banner_length {
     display: flex;
-    margin: 5px 5% 15px 5%;
+    margin: 5px 5% 15px 2%;
     height: 100px;
 }
 
@@ -231,7 +236,7 @@ body {margin:0; padding: 0;}
 
 
 .div_commit {
-    max-width: 125px;
+    max-width: 120px;
     max-height: 150px;
 }
 
@@ -287,7 +292,7 @@ body {margin:0; padding: 0;}
 
 .category {
     display: block;
-    height: 40px;
+    min-height: 49px;
     padding: 5px;
     margin-bottom: 7px;
     color: black;
