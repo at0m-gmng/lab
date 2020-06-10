@@ -156,7 +156,7 @@ body {margin:0; padding: 0;}
     width: auto;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     /* border: 1px solid red; */
     
 }

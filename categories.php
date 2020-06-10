@@ -1,14 +1,15 @@
 <?  
-    setcookie ("id_category", $_GET['id']);
-    // echo $_COOKIE['id_category'];
-    setcookie ("category_num", $_POST['category']);
-    // echo $_COOKIE['category_num'];
-    if($num = (isset ($_COOKIE["category_num"]))) {
-        $category = $_COOKIE["category_num"];
-    }
-    else {
-        $category = "Выберите сортировку";
-    }
+    $id_category = $_GET['id'];
+    setcookie ("id_category", $id_category );
+    // // echo $_COOKIE['id_category'];
+    // setcookie ("category_num", $_POST['category']);
+    // // echo $_COOKIE['category_num'];
+    // if($num = (isset ($_COOKIE["category_num"]))) {
+    //     $category = $_COOKIE["category_num"];
+    // }
+    // else {
+    //     $category = "Выберите сортировку";
+    // }
 
 
     $server = $_SERVER['SERVER_ADDR'];
@@ -119,21 +120,21 @@
                                 // $PRODUCTS[] = array (explode (", ", $products[$key])); }
                                 // for($i=1;$i<=$key; $i++):
 
-                        switch($sql0 = $_GET['id']) {
+                        switch($id_category) {
                             case '1':
-                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 1";
+                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 1";
                                 break;
                             case '2':
-                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 2";
+                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 2";
                                 break;
                             case '3':
-                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 3";
+                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 3";
                                 break;
                             case '4':
-                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 4";
+                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 4";
                                 break;
                             case '5':
-                                $sql0 = "SELECT * FROM `my_first`.`products` WHERE `id_category` = 5";
+                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 5";
                                 break;
                             default:  $sql0 = "SELECT * FROM `products` ";
                         

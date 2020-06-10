@@ -1,15 +1,30 @@
 <?  
-    setcookie ("id_category", $_GET['id']);
+    
+    // if (isset($_COOKIE['id_category'])) {
+    //     header("Location: categories.php");
+    //     exit; 
+    // }
+    
+    // setcookie ("id_category", $_GET['id'], time() +86400);
     // echo $_COOKIE['id_category'];
-    setcookie ("category_num", $_POST['category']);
-    // echo $_COOKIE['category_num'];
-    if($num = (isset ($_COOKIE["category_num"]))) {
-        $category = $_COOKIE["category_num"];
-    }
-    else {
-        $category = "Выберите сортировку";
+    
+    $category = $_POST['category'];
+ 
+    if ( empty($category) ) {
+        $category = $_COOKIE['sort_name'];
+    } else {
+        setcookie ("sort_name",  $category);
     }
 
+    // echo $_COOKIE['category_num'];
+    
+    // if(isset ($_COOKIE["category_num"])) {
+    //     $category = $_COOKIE["category_num"];
+    // }
+    // else {
+    //     echo "КУКИ НЕ УСТАНОВЛЕНЫ";
+    //     $category = "Выберите сортировку";
+    // }
 
     $server = $_SERVER['SERVER_ADDR'];
     $username = 'root';
@@ -19,7 +34,7 @@
 
     $connection = new mysqli ($server, $username, $password, $db_name);
 
-    switch($category = $_POST['category']) {
+    switch($category) {
         case 'Название А-Я':
             $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` ASC";
             break;
@@ -32,8 +47,9 @@
         case 'Цена Я-А':
             $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` DESC";
             break;
-        default:  $sql = "SELECT * FROM `products` ";
-        $category = "Выберите сортировку";
+        // default:  /
+        // $sql = "SELECT * FROM `products`";
+        // $category = "Выберите сортировку";
     }
     $result = $connection->query($sql);   
                   
@@ -92,7 +108,7 @@
                 <div class="Rec0">
                     <b class="Rec">Рекомендуем</b>
                     <div class="sorting">
-                        <form class="form_sorting" name="form1" action="index.php" method="POST" enctype="multipart/form-data">
+                        <form class="form_sorting" name="form1" action="" method="POST" enctype="multipart/form-data">
                             <b>Сортировать по:</b>
                             <label class="form_label form_label_2" for="category"></label>
                             <select name="category"> 
