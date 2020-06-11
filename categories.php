@@ -10,7 +10,20 @@
     // else {
     //     $category = "Выберите сортировку";
     // }
+    $category_katalog = $_POST['category']; 
+    // $category = $_POST['category'];
+    echo $category_katalog;
 
+    if ( empty($category_katalog)   ) {
+        $category = $_COOKIE['sort_name'];
+    } else {
+        $category  = $category_katalog;
+        // setcookie ("sort_name",  $category);
+    }
+
+
+    // $category =  $_COOKIE['sort_name'];
+    // echo $category;
 
     $server = $_SERVER['SERVER_ADDR'];
     $username = 'root';
@@ -19,23 +32,24 @@
     $charset = 'utf8';
 
     $connection = new mysqli ($server, $username, $password, $db_name);
-
-    // switch($category = $_POST['category']) {
-    //     case 'Название А-Я':
-    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` ASC";
-    //         break;
-    //     case 'Название Я-А':
-    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_name` DESC";
-    //         break;
-    //     case 'Цена А-Я':
-    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` ASC";
-    //         break;
-    //     case 'Цена Я-А':
-    //         $sql = "SELECT * FROM `products` ORDER BY `products`.`product_price` DESC";
-    //         break;
-    //     default:  $sql = "SELECT * FROM `products` ";
-    //     $category = "Выберите сортировку";
-    // }
+    
+    // $category = $_POST['category'];
+    switch($category) {
+        case 'Название А-Я':
+            $sql = "ORDER BY `product_name` ASC";
+            break;
+        case 'Название Я-А':
+            $sql = "ORDER BY `product_name` DESC";
+            break;
+        case 'Цена А-Я':
+            $sql = "ORDER BY `product_price` ASC";
+            break;
+        case 'Цена Я-А':
+            $sql = "ORDER BY `product_price` DESC";
+            break;
+        // default:  $sql = "SELECT * FROM `products` ";
+        // $category = "Выберите сортировку";
+    }
     // $result = $connection->query($sql);   
                   
 
@@ -93,7 +107,7 @@
                 <div class="Rec0">
                     <b class="Rec">Рекомендуем</b>
                     <div class="sorting">
-                        <form class="form_sorting" name="form1" action="index.php" method="POST" enctype="multipart/form-data">
+                        <form class="form_sorting" name="form1" action="" method="POST" enctype="multipart/form-data">
                             <b>Сортировать по:</b>
                             <label class="form_label form_label_2" for="category"></label>
                             <select name="category"> 
@@ -120,25 +134,31 @@
                                 // $PRODUCTS[] = array (explode (", ", $products[$key])); }
                                 // for($i=1;$i<=$key; $i++):
 
-                        switch($id_category) {
-                            case '1':
-                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 1";
-                                break;
-                            case '2':
-                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 2";
-                                break;
-                            case '3':
-                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 3";
-                                break;
-                            case '4':
-                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 4";
-                                break;
-                            case '5':
-                                $sql0 = "SELECT * FROM `products` WHERE `id_category` = 5";
-                                break;
-                            default:  $sql0 = "SELECT * FROM `products` ";
+                        // switch($id_category) {
+                        //     case '1':
+                                // $sql0 = "SELECT * FROM `products` WHERE `id_category` = 1";
+                            //     $sql0 = "SELECT * FROM `products` WHERE `id_category` = $id_category $sql";
+                            //     break;
+                            // case '2':
+                            //     $sql0 = "SELECT * FROM `products` WHERE `id_category` = $id_category $sql";
+                            //     break;
+                            // case '3':
+                            //     $sql0 = "SELECT * FROM `products` WHERE `id_category` = $id_category $sql";
+                            //     break;
+                            // case '4':
+                            //     $sql0 = "SELECT * FROM `products` WHERE `id_category` = $id_category $sql";
+                            //     break;
+                            // case '5':
+                            //     $sql0 = "SELECT * FROM `products` WHERE `id_category` = $id_category $sql";
+                            //     break;
+                            // default:  $sql0 = "SELECT * FROM `products` ";
                         
+                        // }
+
+                        if ($id_category) {
+                            $sql0 = "SELECT * FROM `products` WHERE `id_category` = $id_category $sql";
                         }
+
                             $result0 = $connection->query($sql0);
  
                             // while (   ($row = $result->fetch_assoc()) || ($row= $result0->fetch_assoc() ) ) {
